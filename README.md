@@ -1,3 +1,4 @@
-# FE interview take-home project 1
+# how to run
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+yarn -i 
+yarn start
