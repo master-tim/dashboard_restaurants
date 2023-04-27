@@ -5,7 +5,7 @@ import { StyledEngineProvider } from "@mui/material";
 
 import "./index.css";
 import App from "./App";
-import Dashboard from "./Dashboard";
+import Dashboard from "./component/Dashboard";
 import reportWebVitals from "./reportWebVitals";
 
 if (process.env.NODE_ENV === "development") {

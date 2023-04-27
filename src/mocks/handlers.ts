@@ -18,7 +18,7 @@ export const handlers = [
   rest.get<DefaultBodyType, LocationsPathParams, LocationsResult>(
     "/locations",
     (req, res, ctx) => {
-
+      // console.log(res)
       const search = req.url.searchParams.get("search");
       let filteredLocations: Location[] = locations;
       if (search) {
