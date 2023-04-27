@@ -39,7 +39,7 @@ const columns = [
   ];
 
 export default function Dashboard() {
-    console.log(handlers[0])
+    // console.log(handlers[0])
   return (
     <Box
       display="grid"
