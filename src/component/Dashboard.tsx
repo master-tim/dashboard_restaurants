@@ -89,7 +89,9 @@ export default function Dashboard() {
             component="span"
             sx={{ p: 2, bgcolor: "#3A5FFF", width: "80%", borderRadius: 6 }}
           >
-            <Typography sx={{color:"white"}} variant="subtitle2">{params.row.name}</Typography>
+            <Typography sx={{ color: "white" }} variant="subtitle2">
+              {params.row.name}
+            </Typography>
           </Box>
         ) : (
           <Box
@@ -145,16 +147,19 @@ export default function Dashboard() {
       alignItems="center"
       minHeight="90vh"
     >
-      <Typography align="left" variant="h4" fontWeight="semibold.600">
-        Overview
-      </Typography>
       <Box
         display="flex"
         justifyContent="center"
         alignItems="center"
         minHeight="100vh"
       >
-        <Box sx={{ height: 600, width: 1300 }}>
+        
+        <Box sx={{ height: 600, width: 1300}}>
+        <Box display="flex" pb={2}>
+          <Typography variant="h4" fontWeight="semibold.600">
+            Overview
+          </Typography>
+        </Box>
           <DataGrid
             rowHeight={80}
             rows={rows}
@@ -172,22 +177,18 @@ export default function Dashboard() {
               setRowSelectionModel(newRowSelectionModel);
             }}
             rowSelectionModel={rowSelectionModel}
-            // sx={{
-            //   boxShadow: 0,
-            //   border: 0,
-            //   "& .MuiDataGrid-cell:hover": {
-            //     color: "#0091FF",
-            //   },
-            // }}
           />
-          <Box display='flex'>
-          {rowSelectionModel.map(name => {
-            console.log(name)
-            return (
-              <Typography variant="h5">{name}</Typography> 
-          )
+          <Box display="flex" pt={2}>
+            {rowSelectionModel.map((e) => {
+              let index = (e as keyof typeof location);
+              let obj = Object.assign({},location[index]);
+              // console.log(obj.names);
+              if (obj)
+                return  <Typography key={`words${e}`} variant="h5">{e}</Typography>;
+              else 
+                return <Typography key={`words${e}`} variant="h5">{}</Typography>;
             })}
-        </Box>
+          </Box>
         </Box>
       </Box>
     </Box>
