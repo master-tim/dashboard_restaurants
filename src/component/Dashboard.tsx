@@ -4,6 +4,8 @@ import {
   GridCellParams,
   GridColDef,
   GridFilterForm,
+  GridRowParams,
+  GridRowSelectionModel,
 } from "@mui/x-data-grid";
 import { Typography, Box } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
@@ -33,6 +35,9 @@ export default function Dashboard() {
 
   const [starredLocationIds, setStarredLocationIds] = React.useState(null);
   const [starLocStatus, setStarLocStatus] = React.useState("loading");
+
+  const [rowSelectionModel, setRowSelectionModel] =
+    React.useState<GridRowSelectionModel>([]);
 
   React.useEffect(() => {
     fetchLocation()
@@ -115,7 +120,7 @@ export default function Dashboard() {
       width: 250,
 
       renderCell: (params: GridCellParams) => {
-        console.log(params.row.robot.id);
+        // console.log(params.row.robot.id);
         return params.row.robot.id ? (
           <Typography variant="subtitle2">
             Penny-{params.row.robot.id}
@@ -163,6 +168,10 @@ export default function Dashboard() {
             }}
             checkboxSelection
             disableRowSelectionOnClick
+            onRowSelectionModelChange={(newRowSelectionModel) => {
+              setRowSelectionModel(newRowSelectionModel);
+            }}
+            rowSelectionModel={rowSelectionModel}
             // sx={{
             //   boxShadow: 0,
             //   border: 0,
@@ -171,6 +180,14 @@ export default function Dashboard() {
             //   },
             // }}
           />
+          <Box display='flex'>
+          {rowSelectionModel.map(name => {
+            console.log(name)
+            return (
+              <Typography variant="h5">{name}</Typography> 
+          )
+            })}
+        </Box>
         </Box>
       </Box>
     </Box>
