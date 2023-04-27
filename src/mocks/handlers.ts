@@ -1,6 +1,6 @@
 import { DefaultBodyType, rest } from "msw";
 
-import { Location } from "./db";
+import {locations, Location } from "./db";
 
 interface LocationsResult {
   total_count: number;
@@ -18,10 +18,17 @@ export const handlers = [
   rest.get<DefaultBodyType, LocationsPathParams, LocationsResult>(
     "/locations",
     (req, res, ctx) => {
-      // Please implement filtering feature here
+
+      const search = req.url.searchParams.get("search");
+      let filteredLocations: Location[] = locations;
+      if (search) {
+        filteredLocations = filteredLocations.filter((location) =>
+          location.name.toLowerCase().includes(search.toLowerCase())
+        );
+      }
       const result: LocationsResult = {
-        total_count: 0,
-        locations: [],
+        total_count: filteredLocations.length,
+        locations: filteredLocations,
       };
 
       return res(ctx.status(200), ctx.json(result));

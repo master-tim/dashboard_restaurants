@@ -1,9 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { SetupWorkerApi } from "msw";
+import { StyledEngineProvider } from "@mui/material";
+
 import "./index.css";
 import App from "./App";
+import Dashboard from "./Dashboard";
 import reportWebVitals from "./reportWebVitals";
-import { SetupWorkerApi } from "msw";
 
 if (process.env.NODE_ENV === "development") {
   const { worker }: { worker: SetupWorkerApi } = require("./mocks/browser");
@@ -15,7 +18,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <StyledEngineProvider>
+      <Dashboard />
+    </StyledEngineProvider>
   </React.StrictMode>
 );
 
