@@ -1,11 +1,16 @@
 import * as React from "react";
-import { CellPropsOverrides, DataGrid, GridCellParams, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridCellParams,
+  GridColDef,
+  GridFilterForm,
+} from "@mui/x-data-grid";
 import { Typography, Box } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import ReplayIcon from "@mui/icons-material/Replay";
-import Brightness1Icon from '@mui/icons-material/Brightness1';
+import Brightness1Icon from "@mui/icons-material/Brightness1";
 
 const fetchLocation = async () => {
   const response = await fetch("http://localhost:3000/locations");
@@ -74,13 +79,27 @@ export default function Dashboard() {
         <Typography variant="subtitle1">Locations</Typography>
       ),
       renderCell: (params: GridCellParams) => {
-        return(
-        <Box component="span" sx={{ p: 2, bgcolor: '#E4E4E4', width: '80%', borderRadius: 6 }}>
-          <Typography variant="subtitle2">{params.row.name}</Typography>
-        </Box>
-      )},
+        return params.row.robot.is_online ? (
+          <Box
+            component="span"
+            sx={{ p: 2, bgcolor: "#3A5FFF", width: "80%", borderRadius: 6 }}
+          >
+            <Typography sx={{color:"white"}} variant="subtitle2">{params.row.name}</Typography>
+          </Box>
+        ) : (
+          <Box
+            component="span"
+            sx={{ p: 2, bgcolor: "#E4E4E4", width: "80%", borderRadius: 6 }}
+          >
+            <Typography variant="subtitle2">{params.row.name}</Typography>
+          </Box>
+        );
+      },
     },
-    { field: "row.robot.is_online", headerName: "Robots Availability", width: 150,
+    {
+      field: "row.robot.is_online",
+      headerName: "Robots Availability",
+      width: 150,
       renderCell: (params: GridCellParams) => {
         // console.log(params.row.robot.is_online)
         return params.row.robot.is_online ? (
@@ -88,17 +107,30 @@ export default function Dashboard() {
         ) : (
           <Brightness1Icon />
         );
-      }
+      },
     },
-    { field: "robot.id", headerName: "Robot ID", width: 250,
-  
-    renderCell: (params: GridCellParams) => {
-      console.log(params.row.robot.id)
-      return( params.row.robot.id ? 
-        (<Typography variant="subtitle2">Penny-{params.row.robot.id}</Typography>)
-        : (<Typography component="span" sx={{color:"#3A5FFF"}} variant="subtitle2">Add</Typography>)
-    )},
-   },
+    {
+      field: "robot.id",
+      headerName: "Robot ID",
+      width: 250,
+
+      renderCell: (params: GridCellParams) => {
+        console.log(params.row.robot.id);
+        return params.row.robot.id ? (
+          <Typography variant="subtitle2">
+            Penny-{params.row.robot.id}
+          </Typography>
+        ) : (
+          <Typography
+            component="span"
+            sx={{ color: "#3A5FFF" }}
+            variant="subtitle2"
+          >
+            Add
+          </Typography>
+        );
+      },
+    },
   ];
 
   return (
@@ -144,6 +176,3 @@ export default function Dashboard() {
     </Box>
   );
 }
-
-
-
